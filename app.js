@@ -8,15 +8,17 @@ const ctx = canvas.getContext('2d');
 const downloadPhotoBtn = document.getElementById('downloadPhoto');
 const photoPreview = document.getElementById('photoPreview');
 const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+const switchCameraBtn = document.getElementById('switchCamera');
 
 let stream = null;
 let lastPhotoDataURL = null;
+let currentFacingMode = 'environment'; // 'environment' (trasera) o 'user' (frontal)
 
 async function openCamera() {
   try {
     const constraints = {
       video: {
-        facingMode: { ideal: 'environment' },
+        facingMode: { ideal: currentFacingMode },
         width: { ideal: 320 },
         height: { ideal: 240 }
       },
@@ -49,6 +51,22 @@ async function openCamera() {
     console.error('Error al acceder a la cámara:', error);
     alert('No se pudo acceder a la cámara. Revisa los permisos y el contexto (HTTPS/localhost).');
   }
+}
+
+function switchCamera() {
+  // Alternar modo de cámara
+  currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+  // Si hay stream activo, detenerlo antes de reiniciar
+  try {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+    }
+  } catch (e) {
+    console.warn('Al detener el stream para cambiar cámara:', e);
+  }
+
+  // Reabrir la cámara con el nuevo modo
+  openCamera();
 }
 
 function takePhoto() {
@@ -123,3 +141,4 @@ function downloadPhoto() {
 openCameraBtn.addEventListener('click', openCamera);
 takePhotoBtn.addEventListener('click', takePhoto);
 downloadPhotoBtn.addEventListener('click', downloadPhoto);
+switchCameraBtn.addEventListener('click', switchCamera);

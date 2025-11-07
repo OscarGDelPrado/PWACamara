@@ -44,6 +44,9 @@
         color: white;
         font-weight: 600;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
       button:disabled {
         opacity: 0.6;
@@ -97,6 +100,10 @@
         <div class="actions">
           <button id="takePhoto">Tomar foto</button>
           <button id="downloadPhoto" style="display:none">Descargar foto</button>
+          <button id="switchCamera" title="Cambiar cámara" aria-label="Cambiar cámara">
+            <ion-icon name="camera-reverse-outline" style="font-size:20px"></ion-icon>
+            Cambiar cámara
+          </button>
         </div>
       </section>
 
@@ -113,6 +120,9 @@
     </main>
 
     <script src="app.js"></script>
+    <!-- Ionicons (ideal para apps móviles) -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
       // Registro del Service Worker
       if ('serviceWorker' in navigator) {
