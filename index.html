@@ -73,6 +73,10 @@
         border-radius: 8px;
         border: 1px solid #1b2a52;
       }
+      /* Modo espejo para la cámara frontal */
+      video.mirror {
+        transform: scaleX(-1);
+      }
       .actions {
         display: flex;
         gap: 8px;
@@ -114,9 +118,7 @@
              style="background:#0a0f22;border-radius:8px;border:1px solid #1b2a52;" />
       </section>
 
-      <footer>
-        Nota: Para acceder a la cámara, usa HTTPS o localhost.
-      </footer>
+
     </main>
 
     <script src="app.js"></script>

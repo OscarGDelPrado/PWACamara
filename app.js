@@ -38,6 +38,9 @@ async function openCamera() {
     canvas.width = w;
     canvas.height = h;
 
+    // Activar/Desactivar modo espejo en vista previa de video según cámara frontal
+    video.classList.toggle('mirror', currentFacingMode === 'user');
+
     cameraContainer.style.display = 'block';
     cameraContainer.setAttribute('aria-hidden', 'false');
     openCameraBtn.textContent = 'Cámara abierta';
@@ -76,7 +79,14 @@ function takePhoto() {
   }
 
   // Dibujar el frame actual del video en el canvas
+  // Si es cámara frontal, aplicamos espejo en el canvas para que coincida con la vista
+  ctx.save();
+  if (currentFacingMode === 'user') {
+    ctx.translate(canvas.width, 0);
+    ctx.scale(-1, 1);
+  }
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  ctx.restore();
 
   // Convertir a base64 PNG
   lastPhotoDataURL = canvas.toDataURL('image/png');
@@ -107,6 +117,7 @@ function closeCamera() {
     console.warn('Al cerrar la cámara sucedió:', e);
   }
   video.srcObject = null;
+  video.classList.remove('mirror');
   stream = null;
   openCameraBtn.textContent = 'Abrir cámara';
   openCameraBtn.disabled = false;
