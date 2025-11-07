@@ -1,0 +1,11 @@
+{
+  "name": "PWA Cámara",
+  "short_name": "Cámara",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0ea5e9",
+  "description": "PWA para abrir la cámara del dispositivo y capturar una foto.",
+  "icons": []
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PWA Cámara</title>
+
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0ea5e9" />
+
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Arial, sans-serif;
+        margin: 0;
+        padding: 16px;
+        background: #0b1020;
+        color: #eaf2ff;
+        display: grid;
+        place-items: start center;
+        min-height: 100vh;
+      }
+      main {
+        width: 100%;
+        max-width: 680px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 1.6rem;
+      }
+      p.hint {
+        margin: 0 0 20px;
+        opacity: 0.8;
+        font-size: 0.95rem;
+      }
+      button {
+        appearance: none;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 14px;
+        background: #0ea5e9;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      #cameraContainer {
+        display: none; /* inicialmente oculto */
+        margin-top: 16px;
+        background: #111936;
+        border: 1px solid #1b2a52;
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      video, canvas {
+        width: 320px;
+        height: 240px;
+        background: #0a0f22;
+        border-radius: 8px;
+        border: 1px solid #1b2a52;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      footer {
+        margin-top: 18px;
+        font-size: 0.85rem;
+        opacity: 0.75;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>PWA de Cámara</h1>
+      <p class="hint">Permite abrir la cámara, capturar una foto y usarla offline.</p>
+
+      <button id="openCamera">Abrir cámara</button>
+
+      <section id="cameraContainer" aria-hidden="true">
+        <div class="row">
+          <video id="video" autoplay playsinline></video>
+          <canvas id="canvas" width="320" height="240" style="display:none"></canvas>
+        </div>
+        <div class="actions">
+          <button id="takePhoto">Tomar foto</button>
+          <button id="downloadPhoto" style="display:none">Descargar foto</button>
+        </div>
+      </section>
+
+      <!-- Previsualización persistente de la última foto tomada -->
+      <section id="photoPreviewContainer" aria-live="polite" style="display:none; margin-top:16px;">
+        <h2 style="font-size:1.1rem; margin:0 0 8px;">Última foto tomada</h2>
+        <img id="photoPreview" alt="Última foto tomada" width="320" height="240" 
+             style="background:#0a0f22;border-radius:8px;border:1px solid #1b2a52;" />
+      </section>
+
+      <footer>
+        Nota: Para acceder a la cámara, usa HTTPS o localhost.
+      </footer>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+      // Registro del Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('sw.js')
+            .then(() => console.log('Service Worker registrado'))
+            .catch(err => console.error('Error registrando SW:', err));
+        });
+      }
+    </script>
+  </body>
+  </html>
