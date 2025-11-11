@@ -77,6 +77,49 @@
       video.mirror {
         transform: scaleX(-1);
       }
+      /* Galería */
+      #galleryContainer {
+        margin-top: 18px;
+        text-align: center; /* centrar contenido de la galería */
+      }
+      .gallery {
+        position: relative;
+        display: inline-block;
+      }
+      .gallery img {
+        width: 320px;
+        height: 240px;
+        object-fit: cover;
+        background: #0a0f22;
+        border-radius: 12px;
+        border: 1px solid #1b2a52;
+      }
+      .gallery .overlay {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: flex;
+        gap: 8px;
+        background: rgba(17, 25, 54, 0.65);
+        backdrop-filter: blur(6px);
+        padding: 6px;
+        border-radius: 999px;
+        border: 1px solid #1b2a52;
+      }
+      .gallery .overlay button {
+        background: #0ea5e9;
+        padding: 8px 10px;
+        border-radius: 999px;
+      }
+      .gallery .overlay button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .gallery-actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center; /* centrar botón de limpiar */
+      }
       .actions {
         display: flex;
         gap: 8px;
@@ -111,11 +154,28 @@
         </div>
       </section>
 
-      <!-- Previsualización persistente de la última foto tomada -->
-      <section id="photoPreviewContainer" aria-live="polite" style="display:none; margin-top:16px;">
-        <h2 style="font-size:1.1rem; margin:0 0 8px;">Última foto tomada</h2>
-        <img id="photoPreview" alt="Última foto tomada" width="320" height="240" 
-             style="background:#0a0f22;border-radius:8px;border:1px solid #1b2a52;" />
+
+
+      <!-- Galería persistente con navegación -->
+      <section id="galleryContainer" aria-live="polite" style="display:none;">
+        <h2 style="font-size:1.1rem; margin:0 0 8px;">Galería</h2>
+        <div class="gallery">
+          <img id="galleryImage" alt="Foto de la galería" />
+          <div class="overlay">
+            <button id="prevPhoto" title="Anterior" aria-label="Anterior">
+              <ion-icon name="chevron-back-outline" style="font-size:18px"></ion-icon>
+            </button>
+            <button id="nextPhoto" title="Siguiente" aria-label="Siguiente">
+              <ion-icon name="chevron-forward-outline" style="font-size:18px"></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="gallery-actions">
+          <button id="clearGallery" title="Limpiar galería" aria-label="Limpiar galería">
+            <ion-icon name="trash-outline" style="font-size:18px"></ion-icon>
+            Limpiar galería
+          </button>
+        </div>
       </section>
 
 
