@@ -67,11 +67,13 @@
         flex-wrap: wrap;
       }
       video, canvas {
-        width: 320px;
-        height: 240px;
+        width: 100%;
+        max-width: 480px;
+        height: auto; /* mantener proporción correcta en móvil */
         background: #0a0f22;
         border-radius: 8px;
         border: 1px solid #1b2a52;
+        display: block;
       }
       /* Modo espejo para la cámara frontal */
       video.mirror {
@@ -86,10 +88,11 @@
         position: relative;
         display: inline-block;
       }
+      .gallery { max-width: 480px; }
       .gallery img {
-        width: 320px;
-        height: 240px;
-        object-fit: cover;
+        width: 100%;
+        height: auto; /* evita distorsión; usa proporción de la foto */
+        object-fit: contain; /* muestra completa sin recorte */
         background: #0a0f22;
         border-radius: 12px;
         border: 1px solid #1b2a52;
